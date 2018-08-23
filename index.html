@@ -1,0 +1,103 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Hangman - Horse Edition</title>
+    <script src="assets/javascript/game.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+    <nav>
+        <img src="assets/images/hangman.jpg" width="250px" height="250px" style="float: left">
+        <h1 style="text-align: center; width: 600px">Hangman - Horse Edition</h1>
+        <img src="assets/images/hangman.jpg" width="250px" height="250px" style="float: right">
+    </nav>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-offset-2 col-md-8">
+                <div class="jumbotron">
+                    <h2><span id="user-text">Hit any Key to start</span></h2>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- We have to put this at the end of our document to ensure the user-text
+             span exists when we try to access it. -->
+    <script type="text/javascript">
+
+        let wins = 0;
+        let listOfHorseWords = ['spurs', 'whiney', 'trot', 'canter', 'saddle', 'bit', 'bridle', 'foal', 'filly'];
+        let lettersGuess = [];
+        let guessesRemaining = 12;
+        let gameInProgress = false; //needed?
+        let currentGameString = "";
+        let currentWordToGuess = "";
+
+
+        // Let's start by grabbing a reference to the <span> below.
+        let userText = document.getElementById("user-text");
+
+        // Next, we give JavaScript a function to execute when onkeyup event fires.
+        document.onkeyup = function (event) {
+
+            //if the game is just starting
+            if (gameInProgress === false) {
+                gameInProgress = true;
+                //  select a random word from list above
+                currentWordToGuess = listOfHorseWords[Math.floor(Math.random() * listOfHorseWords.length)];
+                console.log(currentWordToGuess);
+                //  set currentGameString to new word in dash form
+                for (var i = 0; i < currentWordToGuess.length; i++) {
+                    currentGameString += '_ ';
+                }
+                //  print a new word in dash form
+                userText.textContent = currentGameString;
+                //  
+            }
+            else if(guessesRemaining !== 0) {
+                // process this key entry as a guess and update all stats
+                // if the currentWordToGuess contains the typed letter, then update the currentGameString
+                let newCurrentString = "";
+                if(currentWordToGuess.indexOf(event.key) > -1)
+                {   
+                    for(let i = 0; i<currentWordToGuess.length; i++)
+                    {                   
+                        if(currentWordToGuess[i] === event.key)
+                        {
+                            newCurrentString = currentGameString.substring(0, i*2) + event.key + currentGameString.substring(i*2 + 1);
+                        }                       
+                    }
+                    
+                    currentGameString = newCurrentString;
+                    userText.textContent = currentGameString;
+                }
+                else
+                {
+                    // else output some smartass response for a wrong guess
+                    userText.textContent = "You missed try again! Guesses Remaining = " + guessesRemaining;
+                    setTimeout(function() {
+                        userText.textContent = currentGameString;
+                    }, 300);
+                    
+                }
+                
+                // reduce number of guesses remaining
+                guessesRemaining--;
+            }
+            else //the game is in progress but we've ran out of guesses
+            {
+                userText.textContent = "GAME OVER! The word was " + currentWordToGuess;
+            }
+
+
+        };
+    </script>
+
+</body>
+
+</html>
