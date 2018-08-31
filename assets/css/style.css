@@ -1,0 +1,28 @@
+
+
+body {
+    background-image: url("../images/gallowsbackground.jpg");
+    background-repeat: no-repeat;
+    background-size: 960px;
+    background-position: center center;
+}
+
+h1 {
+    position: relative;
+   left: 480px; 
+    width: 960px;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    color: whitesmoke; 
+}
+
+h3 {
+    text-align: center;
+    width: 960px;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    color: whitesmoke
+}
+
+.jumbotron {
+    padding-top: 200px;
+    padding-left: 140px;
+}
